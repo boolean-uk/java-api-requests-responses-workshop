@@ -74,7 +74,7 @@ paths:
                 $ref: '#/components/schemas/Publisher'
     delete:
       tags:
-        - authors
+        - publisher
       summary: Delete an author using the ID
       description: Delete an author using their ID
       parameters:
