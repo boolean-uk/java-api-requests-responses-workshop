@@ -1,6 +1,7 @@
 package com.booleanuk.api;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,11 +25,14 @@ public class PublisherController {
     }
 
     @GetMapping("/{id}")
-    public Publisher getOne(@PathVariable(name = "id") int id){
+    public ResponseEntity<Publisher> getOne(@PathVariable(name = "id") int id){
         if (id < this.publishers.size()){
-            return this.publishers.get(id);
+            //return this.publishers.get(id);
+            return new ResponseEntity<>(this.publishers.get(id),
+                    HttpStatus.OK);
         }
-        return null;
+        return new ResponseEntity<>(null,
+                HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping
@@ -40,13 +44,13 @@ public class PublisherController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Publisher update(@PathVariable (name = "id") int id, @RequestBody Publisher publisher){
+    public ResponseEntity<Publisher> update(@PathVariable (name = "id") int id, @RequestBody Publisher publisher){
         if (id < this.publishers.size()) {
             this.publishers.get(id).setName(publisher.getName());
             this.publishers.get(id).setCity(publisher.getCity());
-            return this.publishers.get(id);
+            return new ResponseEntity<>(this.publishers.get(id),HttpStatus.OK);
         }
-        return null;
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
