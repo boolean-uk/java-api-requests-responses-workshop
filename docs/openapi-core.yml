@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Java API Requests and Responses Workshop - Core Criteria
-  description: Core API for the Requests and Repsonses workshop
+  description: Core API for the Requests and Responses workshop
   version: 0.0.2
 
 servers:
