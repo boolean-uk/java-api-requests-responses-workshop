@@ -108,7 +108,7 @@ Then we have a tag which is used as a title, followed by the decription of the U
 We can turn this into a single webpage that can be viewed in a browser using `redocly` (you will need to install this using npm to ) and then you can use the following command:
 
 ```bash
-redocly build-docs docs/openapi-core.yml -o ./docs/index.html
+redocly build-docs docs/openapi-core.yml -o ./docs/authors.html
 ```
 
 To view the result serve the page using live-server in VS Code or something similar.
