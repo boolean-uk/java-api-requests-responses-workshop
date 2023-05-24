@@ -36,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllPublisher'
+                $ref: '#/components/schemas/AllPublishers'
   /publishers/{id}:
     get:
       tags:
