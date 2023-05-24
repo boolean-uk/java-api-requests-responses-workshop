@@ -75,12 +75,12 @@ paths:
     delete:
       tags:
         - publishers
-      summary: Delete an author using the ID
-      description: Delete an author using their ID
+      summary: Delete an publisher using the ID
+      description: Delete an publisher using their ID
       parameters:
         - name: id
           in: path
-          description: The ID of the author to delete
+          description: The ID of the publisher to delete
           required: true
           schema:
             type: integer
