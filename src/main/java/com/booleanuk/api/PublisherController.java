@@ -11,8 +11,8 @@ import java.util.Map;
 @RequestMapping("publishers")
 public class PublisherController {
     private final Map<Integer, Publisher> publishers = new HashMap<>() {{
-       put(1, new Publisher("me", "Athens"));
-       put(2, new Publisher("myself", "Athens"));
+       put(0, new Publisher("me", "Athens"));
+       put(1, new Publisher("myself", "Athens"));
     }};
 
     @GetMapping
@@ -31,14 +31,17 @@ public class PublisherController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Publisher postPublisher(@RequestBody Publisher publisher) {
-        return this.publishers.put(this.publishers.size(), publisher);
+        int id = this.publishers.keySet().stream().max(Integer::compare).get();
+        this.publishers.put(id + 1, publisher);
+        return this.publishers.get(id + 1);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Publisher putPublisher(@PathVariable(name="id") int id, @RequestBody Publisher publisher) {
         if (!publishers.containsKey(id)) return null;
-        return publishers.put(id, publisher);
+        publishers.put(id, publisher);
+        return this.publishers.get(id);
     }
 
     @DeleteMapping("{id}")

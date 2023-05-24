@@ -43,6 +43,13 @@ paths:
         - publishers
       summary: Get a specific publisher using their ID
       description: Get one publisher from the list
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to update
+          required: true
+          schema:
+            type: integer
       responses:
         200:
           content:
