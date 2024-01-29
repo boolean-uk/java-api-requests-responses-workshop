@@ -2,6 +2,7 @@ package com.booleanuk.api.controllers;
 
 import com.booleanuk.api.models.Publisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,11 +25,11 @@ public class PublisherController {
     }
 
     @GetMapping("/{id}")
-    public Publisher getOne(@PathVariable(name = "id") int id) {
+    public ResponseEntity<Publisher> getOne(@PathVariable(name = "id") int id) {
         if (id < this.publishers.size()) {
-            return this.publishers.get(id);
+            return ResponseEntity.ok(this.publishers.get(id));
         }
-        return null;
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping
@@ -39,21 +40,20 @@ public class PublisherController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Publisher update(@PathVariable (name = "id") int id, @RequestBody Publisher publisher) {
+    public ResponseEntity<Publisher> update(@PathVariable (name = "id") int id, @RequestBody Publisher publisher) {
         if (id < this.publishers.size()) {
             this.publishers.get(id).setName(publisher.getName());
             this.publishers.get(id).setCity(publisher.getCity());
-            return this.publishers.get(id);
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.publishers.get(id));
         }
-        return null;
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
-    public Publisher delete(@PathVariable (name = "id") int id) {
+    public ResponseEntity<Publisher> delete(@PathVariable (name = "id") int id) {
         if (id < this.publishers.size()) {
-            return this.publishers.remove(id);
+            return ResponseEntity.ok(this.publishers.remove(id));
         }
-        return null;
+        return ResponseEntity.badRequest().build();
     }
 }
