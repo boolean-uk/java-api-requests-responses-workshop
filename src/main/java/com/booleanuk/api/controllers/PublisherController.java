@@ -29,7 +29,7 @@ public class PublisherController {
         if (id < this.publishers.size()) {
             return ResponseEntity.ok(this.publishers.get(id));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -46,7 +46,7 @@ public class PublisherController {
             this.publishers.get(id).setCity(publisher.getCity());
             return ResponseEntity.status(HttpStatus.CREATED).body(this.publishers.get(id));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -54,6 +54,6 @@ public class PublisherController {
         if (id < this.publishers.size()) {
             return ResponseEntity.ok(this.publishers.remove(id));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 }
