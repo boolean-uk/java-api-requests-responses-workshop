@@ -11,6 +11,105 @@ servers:
 tags:
   - name: authors
 paths:
+  /publishers:
+    post:
+      tags:
+        - publishers
+      operationId: publishersPost
+      summary: Route to use (with a payload) when creating a new publisher
+      description: New publisher creation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Publisher created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+    get:
+      tags:
+        - publishers
+      summary: Plain GET to access the whole list
+      description: Get all of the listed publishers
+      operationId: getPublishers
+      responses:
+        '200':
+          description: Get all publishers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllPublishers'
+  /publishers/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: Id of the publishers
+          required: true
+          schema:
+            type: integer
+      tags:
+        - authors
+      summary: Get a specific publisher using their ID
+      description: Get one publisher from the list
+      operationId: getSpecificPublisher
+      responses:
+        '200':
+          description: Get a single publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+
+    put:
+      tags:
+        - publishers
+      summary: Update an existing publisher
+      description: use the ID of an publisher to update them using the payload
+      operationId: updatePublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Publisher successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+    delete:
+      tags:
+        - publisher
+      summary: Delete an publisher using the ID
+      description: Delete an publisher using their ID
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the author to delete
+          required: true
+          schema:
+            type: integer
+      operationId: deletePublisher
+      responses:
+        '200':
+          description: Successfully deleted the Publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
   /authors:
     post:
       tags:
@@ -111,6 +210,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Author'
 
+
 components:
   schemas:
     CreateAuthor:
@@ -123,6 +223,16 @@ components:
         email:
           type: string
           example: "jrr@tolkien.com"
+    CreatePublisher:
+      type: object
+      required: [name, city]
+      properties:
+        name:
+          type: string
+          example: "Publisher name"
+        city:
+          type: string
+          example: "Stockholm"
     Author:
       type: object
       properties:
@@ -135,7 +245,23 @@ components:
         email:
           type: string
           example: "jrr@tolkien.com"
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Publisher name"
+        city:
+          type: string
+          example: "Stockholm"
     AllAuthors:
       type: array
       items:
         $ref: '#/components/schemas/Author'
+    AllPublishers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Publisher'
