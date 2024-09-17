@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: Publisher
+  description: Publishers should have a name and a city associated with them.
+  version: 0.0.4
+  contact:
+    name: Responses and Requests
+
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: publishers
+paths:
+  /authors:
+    post:
+      tags:
+        - publishers
+      operationId: publisherPost
+      summary: Route to use (with a payload) when creating a new publisher
+      description: New publisher creation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Publisher created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+    get:
+      tags:
+        - publishers
+      summary: Plain GET to access the whole list
+      description: Get all of the listed publisher
+      operationId: getPublisher
+      responses:
+        '200':
+          description: Get all publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllPublishers'
+  /authors/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: Id of the publisher
+          required: true
+          schema:
+            type: integer
+      tags:
+        - publishers
+      summary: Get a specific author using their ID
+      description: Get one author from the list
+      operationId: getSpecificAuthor
+      responses:
+        '200':
+          description: Get a single publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+
+    put:
+      tags:
+        - publishers
+      summary: Update an existing publisher
+      description: use the ID of an publisher to update them using the payload
+      operationId: updatePublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Publisher successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+    delete:
+      tags:
+        - publishers
+      summary: Delete an publisher using the ID
+      description: Delete an publisher using their ID
+      operationId: deletePublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the Publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+
+components:
+  schemas:
+    CreatePublisher:
+      type: object
+      required: [name, city]
+      properties:
+        name:
+          type: string
+          example: "Bonnier"
+        email:
+          type: string
+          example: "Stockholm"
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Bonnier"
+        email:
+          type: string
+          example: "Stockholm"
+    AllPublishers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Publisher'
