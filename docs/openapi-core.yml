@@ -9,72 +9,72 @@ info:
 servers:
   - url: http://localhost:4000
 tags:
-  - name: authors
+  - name: publishers
 paths:
-  /authors:
+  /publishers:
     post:
       tags:
-        - authors
-      operationId: authorsPost
-      summary: Route to use (with a payload) when creating a new author
-      description: New author creation
+        - publishers
+      operationId: publishersPost
+      summary: Route to use (with a payload) when creating a new publisher
+      description: New publisher creation
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateAuthor'
+              $ref: '#/components/schemas/CreatePublisher'
       responses:
         '201':
-          description: Author created
+          description: Publisher created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Publisher'
     get:
       tags:
-        - authors
+        - publishers
       summary: Plain GET to access the whole list
-      description: Get all of the listed authors
-      operationId: getAuthors
+      description: Get all of the listed publishers
+      operationId: getPublishers
       responses:
         '200':
-          description: Get all authors
+          description: Get all publishers
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllAuthors'
-  /authors/{id}:
+                $ref: '#/components/schemas/AllPublishers'
+  /publishers/{id}:
     get:
       parameters:
         - name: id
           in: path
-          description: Id of the author
+          description: Id of the publisher
           required: true
           schema:
             type: integer
       tags:
-        - authors
-      summary: Get a specific author using their ID
-      description: Get one author from the list
-      operationId: getSpecificAuthor
+        - publishers
+      summary: Get a specific publisher using their ID
+      description: Get one publisher from the list
+      operationId: getSpecificPublisher
       responses:
         '200':
-          description: Get a single author
+          description: Get a single publisher
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Publisher'
 
     put:
       tags:
-        - authors
-      summary: Update an existing author
-      description: use the ID of an author to update them using the payload
-      operationId: updateAuthor
+        - publishers
+      summary: Update an existing publisher
+      description: use the ID of an publisher to update them using the payload
+      operationId: updatePublisher
       parameters:
         - name: id
           in: path
-          description: The ID of the author to update
+          description: The ID of the publisher to update
           required: true
           schema:
             type: integer
@@ -82,48 +82,48 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateAuthor'
+              $ref: '#/components/schemas/CreatePublisher'
       responses:
         '201':
-          description: Author successfully updated
+          description: Publisher successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Publisher'
     delete:
       tags:
-        - authors
-      summary: Delete an author using the ID
-      description: Delete an author using their ID
-      operationId: deleteAuthor
+        - publishers
+      summary: Delete an publisher using the ID
+      description: Delete an publisher using their ID
+      operationId: deletePublisher
       parameters:
         - name: id
           in: path
-          description: The ID of the author to delete
+          description: The ID of the publisher to delete
           required: true
           schema:
             type: integer
       responses:
         '200':
-          description: Successfully deleted the Author
+          description: Successfully deleted the Publisher
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Publisher'
 
 components:
   schemas:
-    CreateAuthor:
+    CreatePublisher:
       type: object
-      required: [name, email]
+      required: [name, city]
       properties:
         name:
           type: string
-          example: "JRR Tolkien"
-        email:
+          example: "Arendal Historielag"
+        city:
           type: string
-          example: "jrr@tolkien.com"
-    Author:
+          example: "Arendal"
+    Publisher:
       type: object
       properties:
         id:
@@ -131,11 +131,11 @@ components:
           example: 1
         name:
           type: string
-          example: "JRR Tolkien"
-        email:
+          example: "Arendal Historielag"
+        city:
           type: string
-          example: "jrr@tolkien.com"
-    AllAuthors:
+          example: "Arendal"
+    AllPublishers:
       type: array
       items:
-        $ref: '#/components/schemas/Author'
+        $ref: '#/components/schemas/Publisher'
